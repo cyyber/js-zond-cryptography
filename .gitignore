@@ -2,10 +2,7 @@
 /*.js.map
 /*.d.ts
 /*.d.ts.map
+/bip39
 /test-builds
 /node_modules
-.parcel-cache
-/esm
-/test/node_modules
-/test/package-lock.json
-/test/test-builds
+/.parcel-cache
