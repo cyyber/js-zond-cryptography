@@ -1,0 +1,11 @@
+/*.js
+/*.js.map
+/*.d.ts
+/*.d.ts.map
+/test-builds
+/node_modules
+.parcel-cache
+/esm
+/test/node_modules
+/test/package-lock.json
+/test/test-builds
