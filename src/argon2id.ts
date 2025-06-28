@@ -1,32 +1,32 @@
-import { scrypt as _sync, scryptAsync as _async } from "@noble/hashes/scrypt";
+import { argon2id as _sync, argon2idAsync as _async } from "@noble/hashes/argon2";
 import { assertBytes } from "./utils";
 
 type OnProgressCallback = (progress: number) => void;
 
-export async function scrypt(
+export async function argon2id(
   password: Uint8Array,
   salt: Uint8Array,
-  n: number,
+  t: number,
+  m: number,
   p: number,
-  r: number,
   dkLen: number,
   onProgress?: OnProgressCallback
 ): Promise<Uint8Array> {
   assertBytes(password);
   assertBytes(salt);
-  return _async(password, salt, { N: n, r, p, dkLen, onProgress });
+  return _async(password, salt, { t, m, p, dkLen, onProgress });
 }
 
-export function scryptSync(
+export function argon2idSync(
   password: Uint8Array,
   salt: Uint8Array,
-  n: number,
+  t: number,
+  m: number,
   p: number,
-  r: number,
   dkLen: number,
   onProgress?: OnProgressCallback
 ): Uint8Array {
   assertBytes(password);
   assertBytes(salt);
-  return _sync(password, salt, { N: n, r, p, dkLen, onProgress });
+  return _sync(password, salt, { t, m, p, dkLen, onProgress });
 }

@@ -1,9 +1,9 @@
 // buf.toString('hex') -> toHex(buf)
 import assert from "@noble/hashes/_assert";
 import { hexToBytes as _hexToBytes } from "@noble/hashes/utils";
-const assertBool = assert.bool;
+// const assertBool = assert.bool;
 const assertBytes = assert.bytes;
-export { assertBool, assertBytes };
+export { /*assertBool,*/ assertBytes };
 export {
   bytesToHex,
   bytesToHex as toHex,

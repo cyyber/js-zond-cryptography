@@ -1,7 +1,8 @@
-import { scrypt as scryptAsync, scryptSync } from "../../src/scrypt";
-import { hexToBytes, toHex } from "../../src/utils";
+import { argon2id as argon2idAsync, argon2idSync } from "../argon2id";
+import { hexToBytes, toHex } from "../utils";
 import { deepStrictEqual } from "./assert";
 
+// TODO(rgeraldes24)
 const TEST_VECTORS = [
   {
     password: "",
@@ -35,15 +36,15 @@ const TEST_VECTORS = [
   }
 ];
 
-describe("scrypt", function() {
-  describe("scrypt sync", function() {
+describe("argon2id", function() {
+  describe("argon2id sync", function() {
     for (let i = 0; i < TEST_VECTORS.length; i++) {
       it(`Should process the test ${i} correctly`, function() {
         this.timeout(10000)
 
         const vector = TEST_VECTORS[i];
 
-        const derived = scryptSync(
+        const derived = argon2idSync(
           hexToBytes(vector.password),
           hexToBytes(vector.salt),
           +vector.N,
@@ -57,14 +58,14 @@ describe("scrypt", function() {
     }
   });
 
-  describe("scrypt async", function() {
+  describe("argon2id async", function() {
     for (let i = 0; i < TEST_VECTORS.length; i++) {
       it(`Should process the test ${i} correctly`, async function() {
         this.timeout(10000);
 
         const vector = TEST_VECTORS[i];
 
-        const derived = await scryptAsync(
+        const derived = await argon2idAsync(
           hexToBytes(vector.password),
           hexToBytes(vector.salt),
           +vector.N,

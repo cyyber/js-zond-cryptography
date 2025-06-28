@@ -6,7 +6,7 @@ developing Javascript / TypeScript applications and tools for Zond.
 The cryptographic primitives included are:
 
 * [Hashes: keccak-256](#hasheskeccak-256)
-* [KDFs: PBKDF2, Scrypt](#kdfs-pbkdf2-scrypt)
+* [KDFs: Argon2id](#kdfs-argon2id)
 * [CSPRNG (Cryptographically strong pseudorandom number generator)](#csprng-cryptographically-strong-pseudorandom-number-generator)
 * [AES Encryption](#aes-encryption)
 
@@ -39,8 +39,7 @@ tree-shaking, but the possibility of it not working properly on one of
 const { keccak256 } = require("zond-cryptography/keccak");
 
 // KDFs
-const { pbkdf2Sync } = require("zond-cryptography/pbkdf2");
-const { scryptSync } = require("zond-cryptography/scrypt");
+const { argon2idSync } = require("zond-cryptography/argon2id");
 
 // Random
 const { getRandomBytesSync } = require("zond-cryptography/random");
@@ -76,40 +75,22 @@ const { bytesToHex as toHex } = require("zond-cryptography/utils");
 toHex(keccak256(utf8ToBytes("abc")))
 ```
 
-## KDFs: PBKDF2, Scrypt
+## KDFs: Argon2id
 
 ```ts
-function pbkdf2(password: Uint8Array, salt: Uint8Array, iterations: number, keylen: number, digest: string): Promise<Uint8Array>;
-function pbkdf2Sync(password: Uint8Array, salt: Uint8Array, iterations: number, keylen: number, digest: string): Uint8Array;
-function scrypt(password: Uint8Array, salt: Uint8Array, N: number, p: number, r: number, dkLen: number, onProgress?: (progress: number) => void): Promise<Uint8Array>;
-function scryptSync(password: Uint8Array, salt: Uint8Array, N: number, p: number, r: number, dkLen: number, onProgress?: (progress: number) => void)): Uint8Array;
+function argon2id(password: Uint8Array, salt: Uint8Array, t: number, m: number, p: number, dkLen: number, onProgress?: (progress: number) => void): Promise<Uint8Array>;
+function argon2idSync(password: Uint8Array, salt: Uint8Array, t: number, m: number, p: number, dkLen: number, onProgress?: (progress: number) => void)): Uint8Array;
 ```
 
-The `pbkdf2` submodule has two functions implementing the PBKDF2 key
-derivation algorithm in synchronous and asynchronous ways. This algorithm is
-very slow, and using the synchronous version in the browser is not recommended,
-as it will block its main thread and hang your UI. The KDF supports `sha256` and `sha512` digests.
-
-The `scrypt` submodule has two functions implementing the Scrypt key
+The `argon2id` submodule has two functions implementing the Argon2id key
 derivation algorithm in synchronous and asynchronous ways. This algorithm is
 very slow, and using the synchronous version in the browser is not recommended,
 as it will block its main thread and hang your UI.
 
-Encoding passwords is a frequent source of errors. Please read
-[these notes](https://github.com/ricmoo/scrypt-js/tree/0eb70873ddf3d24e34b53e0d9a99a0cef06a79c0#encoding-notes)
-before using these submodules.
-
 ```js
-const { pbkdf2 } = require("zond-cryptography/pbkdf2");
+const { argon2id } = require("zond-cryptography/argon2id");
 const { utf8ToBytes } = require("zond-cryptography/utils");
-// Pass Uint8Array, or convert strings to Uint8Array
-console.log(await pbkdf2(utf8ToBytes("password"), utf8ToBytes("salt"), 131072, 32, "sha256"));
-```
-
-```js
-const { scrypt } = require("zond-cryptography/scrypt");
-const { utf8ToBytes } = require("zond-cryptography/utils");
-console.log(await scrypt(utf8ToBytes("password"), utf8ToBytes("salt"), 262144, 8, 1, 32));
+console.log(await argon2id(utf8ToBytes("password"), utf8ToBytes("salt"), 8, 262144, 1, 32));
 ```
 
 ## CSPRNG (Cryptographically strong pseudorandom number generator)
@@ -148,7 +129,7 @@ compromise your users' security.
 The `key` parameters in this submodule are meant to be strong cryptographic
 keys. If you want to obtain such a key from a password, please use a
 [key derivation function](https://en.wikipedia.org/wiki/Key_derivation_function)
-like [pbkdf2](#pbkdf2-submodule) or [scrypt](#scrypt-submodule).
+like [argon2id](#argon2id-submodule).
 
 ### Operation modes
 

@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@noble/curves": "1.0.0",
-    "@noble/hashes": "1.3.0"
+    "@noble/hashes": "1.6.1"
   },
   "browser": {
     "crypto": false
@@ -71,26 +71,17 @@
     "webpack-cli": "4.10"
   },
   "keywords": [
-    "ethereum",
+    "zond",
     "cryptography",
     "digital signature",
     "hash",
     "encryption",
     "prng",
     "keccak",
-    "scrypt",
-    "pbkdf2",
+    "argon2id",
     "sha-256",
-    "ripemd-160",
-    "blake2b",
     "aes",
-    "advanced encryption standar",
-    "secp256k1",
-    "ecdsa",
-    "bip32",
-    "hierarchical deterministic keys",
-    "hdwallet",
-    "hdkeys"
+    "advanced encryption standar"
   ],
   "targets": {
     "parcel_tests": {
