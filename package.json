@@ -79,7 +79,6 @@
     "prng",
     "keccak",
     "argon2id",
-    "sha-256",
     "aes",
     "advanced encryption standar"
   ],
