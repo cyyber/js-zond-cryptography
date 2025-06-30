@@ -1,17 +1,7 @@
 {
   "name": "zond-cryptography",
-  "version": "2.0.0",
-  "description": "All the cryptographic primitives used in Ethereum",
-  "contributors": [
-    {
-      "name": "Patricio Palladino",
-      "email": "patricio@nomiclabs.io"
-    },
-    {
-      "name": "Paul Miller",
-      "url": "https://paulmillr.com"
-    }
-  ],
+  "version": "0.1.0",
+  "description": "All the cryptographic primitives used in Zond",
   "repository": "https://github.com/theQRL/js-zond-cryptography",
   "license": "MIT",
   "main": "./index.js",

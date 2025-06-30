@@ -1,34 +1,52 @@
 import { decrypt, encrypt } from "../../src/aes";
 import { hexToBytes, toHex } from "../../src/utils";
 import { deepStrictEqual, rejects } from "./assert";
-// Test vectors taken from https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a.pdf
+// Test vectors taken from https://github.com/paulmillr/noble-ciphers/blob/main/test/vectors/wycheproof/aes_gcm_test.json
 const TEST_VECTORS = [
   {
     mode: "aes-256-gcm",
-    key: "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
-    iv: "000102030405060708090a0b",
-    msg: "6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e5130c81c46a35ce411e5fbc1191a0a52eff69f2445df4f9b17ad2b417be66c3710",
+    key: "80ba3192c803ce965ea371d5ff073cf0f43b6a2ab576b208426e11409c09b9b0",
+    iv: "4da5bf8dfd5852c1ea12379d",
+    msg: "",
     cypherText:
-      "f58c4c04d6e5f1ba779eabfb5f7bfbd69cfc4e967edb808d679f777bc6702c7d39f23369a9d9bacfa530e26304231461b2eb05e2c39be9fcda6c19078c6a9d1b",
+      "4771a7c404a472966cea8f73c8bfe17a",
     pkcs7PaddingEnabled: false,
   },
   {
     mode: "aes-256-gcm",
-    key: "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
-    iv: "000102030405060708090a0b",
-    msg: "6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e5130c81c46a35ce411e5fbc1191a0a52eff69f2445df4f9b17ad2b417be66c371010101010101010101010101010101010",
+    key: "cc56b680552eb75008f5484b4cb803fa5063ebd6eab91f6ab6aef4916a766273",
+    iv: "99e23ec48985bccdeeab60f1",
+    msg: "2a",
     cypherText:
-      "f58c4c04d6e5f1ba779eabfb5f7bfbd69cfc4e967edb808d679f777bc6702c7d39f23369a9d9bacfa530e26304231461b2eb05e2c39be9fcda6c19078c6a9d1b3f461796d6b0d6b2e0c2a72b4d80e644",
+      "06633c1e9703ef744ffffb40edf9d14355",
     pkcs7PaddingEnabled: false,
   },
   {
     mode: "aes-256-gcm",
-    key: "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
-    iv: "000102030405060708090a0b",
-    msg: "6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e5130c81c46a35ce411e5fbc1191a0a52eff69f2445df4f9b17ad2b417be66c3710",
+    key: "cc56b680552eb75008f5484b4cb803fa5063ebd6eab91f6ab6aef4916a766273",
+    iv: "99e23ec48985bccdeeab60f1",
+    msg: "2a",
     cypherText:
-      "f58c4c04d6e5f1ba779eabfb5f7bfbd69cfc4e967edb808d679f777bc6702c7d39f23369a9d9bacfa530e26304231461b2eb05e2c39be9fcda6c19078c6a9d1b3f461796d6b0d6b2e0c2a72b4d80e644",
+      "06633c1e9703ef744ffffb40edf9d14355",
     pkcs7PaddingEnabled: true,
+  },
+  {
+    mode: "aes-256-gcm",
+    key: "51e4bf2bad92b7aff1a4bc05550ba81df4b96fabf41c12c7b00e60e48db7e152",
+    iv: "4f07afedfdc3b6c2361823d3",
+    msg: "be3308f72a2c6aed",
+    cypherText:
+      "cf332a12fdee800b602e8d7c4799d62c140c9bb834876b09",
+    pkcs7PaddingEnabled: false,
+  },
+  {
+    mode: "aes-256-gcm",
+    key: "67119627bd988eda906219e08c0d0d779a07d208ce8a4fe0709af755eeec6dcb",
+    iv: "68ab7fdbf61901dad461d23c",
+    msg: "51f8c1f731ea14acdb210a6d973e07",
+    cypherText:
+      "43fc101bff4b32bfadd3daf57a590eec04aacb7148a8b8be44cb7eaf4efa69",
+    pkcs7PaddingEnabled: false,
   },
 ];
 
@@ -59,8 +77,6 @@ describe("aes", () => {
     });
   }
 
-  // TODO(rgeraldes24)
-  /*
   it("Should throw when not padding automatically and the message isn't the right size", async () => {
     rejects(() =>
       encrypt(
@@ -72,7 +88,6 @@ describe("aes", () => {
       )
     );
   });
-  */
 
   it("Should throw when trying to use non-aes modes", async () => {
     rejects(() =>

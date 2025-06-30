@@ -1,38 +1,88 @@
-import { argon2id as argon2idAsync, argon2idSync } from "../argon2id";
-import { hexToBytes, toHex } from "../utils";
+import { argon2id as argon2idAsync, argon2idSync } from "../../src/argon2id";
+import { toHex, utf8ToBytes } from "../../src/utils";
 import { deepStrictEqual } from "./assert";
 
-// TODO(rgeraldes24)
 const TEST_VECTORS = [
+  // Test vectors taken https://github.com/paulmillr/noble-hashes/blob/main/test/argon2.test.ts
   {
-    password: "",
-    salt: "",
-    N: 16,
+    password: "password",
+    salt: "somesalt",
+    t: 2,
+    m: 65536,
     p: 1,
-    r: 1,
-    dkLen: 64,
+    dkLen: 32,
     derivedKey:
-      "77d6576238657b203b19ca42c18a0497f16b4844e3074ae8dfdffa3fede21442fcd0069ded0948f8326a753a0fc81f17e8d3e0fb2e0d3628cf35e20c38d18906"
+      "09316115d5cf24ed5a15a31a3ba326e5cf32edc24702987c02b6566f61913cf7"
   },
   {
-    password: "70617373776f7264",
-    salt: "4e61436c",
-    N: 1024,
-    p: 16,
-    r: 8,
-    dkLen: 64,
+    password: "password",
+    salt: "somesalt",
+    t: 2,
+    m: 262144,
+    p: 1,
+    dkLen: 32,
     derivedKey:
-      "fdbabe1c9d3472007856e7190d01e9fe7c6ad7cbc8237830e77376634b3731622eaf30d92e22a3886ff109279d9830dac727afb94a83ee6d8360cbdfa2cc0640"
+      "78fe1ec91fb3aa5657d72e710854e4c3d9b9198c742f9616c2f085bed95b2e8c"
   },
   {
-    password: "706c656173656c65746d65696e",
-    salt: "536f6469756d43686c6f72696465",
-    N: 16384,
+    password: "password",
+    salt: "somesalt",
+    t: 2,
+    m: 256,
     p: 1,
-    r: 8,
-    dkLen: 64,
+    dkLen: 32,
     derivedKey:
-      "7023bdcb3afd7348461c06cd81fd38ebfda8fbba904f8e3ea9b543f6545da1f2d5432955613f0fcf62d49705242a9af9e61e85dc0d651e40dfcf017b45575887"
+      "9dfeb910e80bad0311fee20f9c0e2b12c17987b4cac90c2ef54d5b3021c68bfe"
+  },
+  {
+    password: "password",
+    salt: "somesalt",
+    t: 2,
+    m: 256,
+    p: 2,
+    dkLen: 32,
+    derivedKey:
+      "6d093c501fd5999645e0ea3bf620d7b8be7fd2db59c20d9fff9539da2bf57037"
+  },
+  {
+    password: "password",
+    salt: "somesalt",
+    t: 1,
+    m: 65536,
+    p: 1,
+    dkLen: 32,
+    derivedKey:
+      "f6a5adc1ba723dddef9b5ac1d464e180fcd9dffc9d1cbf76cca2fed795d9ca98"
+  },
+  {
+    password: "password",
+    salt: "somesalt",
+    t: 4,
+    m: 65536,
+    p: 1,
+    dkLen: 32,
+    derivedKey:
+      "9025d48e68ef7395cca9079da4c4ec3affb3c8911fe4f86d1a2520856f63172c"
+  },
+  {
+    password: "differentpassword",
+    salt: "somesalt",
+    t: 2,
+    m: 65536,
+    p: 1,
+    dkLen: 32,
+    derivedKey:
+      "0b84d652cf6b0c4beaef0dfe278ba6a80df6696281d7e0d2891b817d8c458fde"
+  },
+  {
+    password: "password",
+    salt: "diffsalt",
+    t: 2,
+    m: 65536,
+    p: 1,
+    dkLen: 32,
+    derivedKey:
+      "bdf32b05ccc42eb15d58fd19b1f856b113da1e9a5874fdcc544308565aa8141c"
   }
 ];
 
@@ -45,11 +95,11 @@ describe("argon2id", function() {
         const vector = TEST_VECTORS[i];
 
         const derived = argon2idSync(
-          hexToBytes(vector.password),
-          hexToBytes(vector.salt),
-          +vector.N,
+          utf8ToBytes(vector.password),
+          utf8ToBytes(vector.salt),
+          +vector.t,
+          +vector.m,
           +vector.p,
-          +vector.r,
           +vector.dkLen
         );
 
@@ -66,11 +116,11 @@ describe("argon2id", function() {
         const vector = TEST_VECTORS[i];
 
         const derived = await argon2idAsync(
-          hexToBytes(vector.password),
-          hexToBytes(vector.salt),
-          +vector.N,
+          utf8ToBytes(vector.password),
+          utf8ToBytes(vector.salt),
+          +vector.t,
+          +vector.m,
           +vector.p,
-          +vector.r,
           +vector.dkLen
         );
 

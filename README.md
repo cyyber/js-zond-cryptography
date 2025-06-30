@@ -220,8 +220,8 @@ These can be used by setting your `plugins` array like this:
 
 ## License
 
-`ethereum-cryptography` is released under The MIT License (MIT)
+`zond-cryptography` is released under The MIT License (MIT)
 
-Copyright (c) 2021 Patricio Palladino, Paul Miller, ethereum-cryptography contributors
+Copyright (c) 2021 Patricio Palladino, Paul Miller, zond-cryptography contributors
 
 See [LICENSE](./LICENSE) file.
