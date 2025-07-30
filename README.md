@@ -1,7 +1,7 @@
-# zond-cryptography
+# qrl-cryptography
 
 All pure-js cryptographic primitives normally used when
-developing Javascript / TypeScript applications and tools for Zond.
+developing Javascript / TypeScript applications and tools for QRL.
 
 The cryptographic primitives included are:
 
@@ -16,10 +16,10 @@ Use NPM / Yarn in node.js / browser:
 
 ```bash
 # NPM
-npm install zond-cryptography
+npm install qrl-cryptography
 
 # Yarn
-yarn add zond-cryptography
+yarn add qrl-cryptography
 ```
 
 See [browser usage](#browser-usage) for information on using the package with major Javascript bundlers. It is
@@ -36,19 +36,19 @@ tree-shaking, but the possibility of it not working properly on one of
 
 ```js
 // Hashes
-const { keccak256 } = require("zond-cryptography/keccak");
+const { keccak256 } = require("qrl-cryptography/keccak");
 
 // KDFs
-const { argon2idSync } = require("zond-cryptography/argon2id");
+const { argon2idSync } = require("qrl-cryptography/argon2id");
 
 // Random
-const { getRandomBytesSync } = require("zond-cryptography/random");
+const { getRandomBytesSync } = require("qrl-cryptography/random");
 
 // AES encryption
-const { encrypt } = require("zond-cryptography/aes");
+const { encrypt } = require("qrl-cryptography/aes");
 
 // utilities
-const { hexToBytes, toHex, utf8ToBytes } = require("zond-cryptography/utils");
+const { hexToBytes, toHex, utf8ToBytes } = require("qrl-cryptography/utils");
 ```
 
 ## Hashes: keccak-256
@@ -62,16 +62,16 @@ Exposes following cryptographic hash functions:
 and `keccak512`)
 
 ```js
-const { keccak256, keccak224, keccak384, keccak512 } = require("zond-cryptography/keccak");
+const { keccak256, keccak224, keccak384, keccak512 } = require("qrl-cryptography/keccak");
 
 keccak256(Uint8Array.from([1, 2, 3]))
 
 // Can be used with strings
-const { utf8ToBytes } = require("zond-cryptography/utils");
+const { utf8ToBytes } = require("qrl-cryptography/utils");
 keccak256(utf8ToBytes("abc"))
 
 // If you need hex
-const { bytesToHex as toHex } = require("zond-cryptography/utils");
+const { bytesToHex as toHex } = require("qrl-cryptography/utils");
 toHex(keccak256(utf8ToBytes("abc")))
 ```
 
@@ -88,8 +88,8 @@ very slow, and using the synchronous version in the browser is not recommended,
 as it will block its main thread and hang your UI.
 
 ```js
-const { argon2id } = require("zond-cryptography/argon2id");
-const { utf8ToBytes } = require("zond-cryptography/utils");
+const { argon2id } = require("qrl-cryptography/argon2id");
+const { utf8ToBytes } = require("qrl-cryptography/utils");
 console.log(await argon2id(utf8ToBytes("password"), utf8ToBytes("salt"), 8, 262144, 1, 32));
 ```
 
@@ -106,7 +106,7 @@ pseudo-random data in synchronous and asynchronous ways.
 Backed by [`crypto.getRandomValues`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues) in browser and by [`crypto.randomBytes`](https://nodejs.org/api/crypto.html#crypto_crypto_randombytes_size_callback) in node.js. If backends are somehow not available, the module would throw an error and won't work, as keeping them working would be insecure.
 
 ```js
-const { getRandomBytesSync } = require("zond-cryptography/random");
+const { getRandomBytesSync } = require("qrl-cryptography/random");
 console.log(getRandomBytesSync(32));
 ```
 
@@ -185,8 +185,8 @@ exception.
 ### Example usage
 
 ```js
-const { encrypt } = require("zond-cryptography/aes");
-const { hexToBytes, utf8ToBytes } = require("zond-cryptography/utils");
+const { encrypt } = require("qrl-cryptography/aes");
+const { hexToBytes, utf8ToBytes } = require("qrl-cryptography/utils");
 
 console.log(
   encrypt(
@@ -220,8 +220,8 @@ These can be used by setting your `plugins` array like this:
 
 ## License
 
-`zond-cryptography` is released under The MIT License (MIT)
+`ethereum-cryptography` is released under The MIT License (MIT)
 
-Copyright (c) 2021 Patricio Palladino, Paul Miller, zond-cryptography contributors
+Copyright (c) 2021 Patricio Palladino, Paul Miller, ethereum-cryptography contributors
 
 See [LICENSE](./LICENSE) file.
