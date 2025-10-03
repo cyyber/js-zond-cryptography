@@ -1,0 +1,1 @@
+export { ml_dsa87 } from "@noble/post-quantum/ml-dsa";
