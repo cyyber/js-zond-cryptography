@@ -16,7 +16,7 @@ const TEST_VECTORS = [
   },
 ]
 
-describe("ml_dsa87", () => {
+describe("ML-DSA-87", () => {
   for (let i = 0; i < TEST_VECTORS.length; i++) {
       it(`Should process the test ${i} correctly`, async function() {
         const vector = TEST_VECTORS[i];
